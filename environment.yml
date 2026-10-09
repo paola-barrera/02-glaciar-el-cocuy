@@ -1,0 +1,16 @@
+name: glaciar-cocuy
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - ipykernel          # para ejecutar celdas en VS Code por celdas
+  - earthengine-api    # acceso a Google Earth Engine desde Python
+  - geemap             # mapas interactivos de GEE
+  - pandas             # tablas de datos
+  - geopandas          # datos vectoriales (polígonos)
+  - python-duckdb      # SQL
+  - scipy              # estadística
+  - matplotlib         # gráficos
+  - pip
+  - pip:
+      - pymannkendall  # test de tendencia Mann-Kendall y pendiente de Sen. OJO Revisar
