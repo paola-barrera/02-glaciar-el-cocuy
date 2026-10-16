@@ -1,10 +1,11 @@
 # %% Conectar con Google Earth Engine
 import ee
 import pandas as pd
-ee.Initialize(project="tactical-runway-463615-m4")
+from a_config import PROYECTO_GEE, AREA_COORDS
+ee.Initialize(project=PROYECTO_GEE)
 
 # %% Área de estudio 
-area = ee.Geometry.Rectangle([-72.34, 6.33, -72.23, 6.57])
+area = ee.Geometry.Rectangle(AREA_COORDS)
 
 # %% Colecciones Landsat
 colecciones = {
@@ -29,6 +30,8 @@ def resumen_ano(ano):
     return resultado
 
 #%%
-filas = [resumen_anio(anio) for anio in range(2009, 2027)]
+filas = [resumen_ano(ano) for ano in range(2009, 2027)]
 tabla = pd.DataFrame(filas).set_index("año")
 tabla
+
+# %%
