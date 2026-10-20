@@ -11,7 +11,7 @@ area = ee.Geometry.Rectangle(AREA_COORDS)
 l7_2009 = (
     ee.ImageCollection("LANDSAT/LE07/C02/T1_L2")
     .filterBounds(area)
-    .filterDate("2008-12-01", "2009-03-01")
+    .filterDate("2013-12-01", "2014-03-01")
     .sort("CLOUD_COVER")
 )
 
@@ -30,8 +30,8 @@ tabla_2009
 # %% Ver una imagen concreta
 imagen = (
     l7_2009
-    #.filter(ee.Filter.eq("DATE_ACQUIRED", "2009-02-05"))
-    .filter(ee.Filter.eq("CLOUD_COVER", 47))
+    .filter(ee.Filter.eq("DATE_ACQUIRED", "2014-01-18"))
+    .filter(ee.Filter.eq("WRS_ROW", 56))
     .first() #Se requiere para elegir la imagen de la colección así sea solo 1
 )
 
