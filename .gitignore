@@ -184,3 +184,4 @@ cython_debug/
 data/
 *.tif
 *.tiff
+!data/zona_excluida.geojson

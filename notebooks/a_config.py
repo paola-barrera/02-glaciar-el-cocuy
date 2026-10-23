@@ -24,3 +24,7 @@ FECHAS_DESPEJADAS = {
     2024: ["2023-12-05", "2023-12-13", "2024-01-06", "2024-01-14", "2024-01-22"],  # L8 y L9. L7 no valía la pena
     2026: ["2025-12-18", "2025-12-26", "2026-02-12", "2026-02-28"],  # L8 y L9
 }
+
+# Umbrales para clasificar hielo (algoritmos clásicos de nieve; comprobados en 2009 y 2026)
+UMBRAL_NDSI = 0.4   # por encima: nieve, hielo o agua
+UMBRAL_NIR = 0.11   # por encima: descarta el agua, que es muy baja en el NIR
