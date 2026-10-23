@@ -6,7 +6,7 @@ from a_config import PROYECTO_GEE, AREA_COORDS, FECHAS_DESPEJADAS, TEMPORADAS, U
 ee.Initialize(project=PROYECTO_GEE)
 area = ee.Geometry.Rectangle(AREA_COORDS)
 
-# %% Bandas de cada colección, en orden: azul, verde, rojo, NIR, SWIR1, SWIR2
+# Bandas de cada colección, en orden: azul, verde, rojo, NIR, SWIR1, SWIR2
 BANDAS = {
     "LANDSAT/LT05/C02/T1_L2": ["SR_B1", "SR_B2", "SR_B3", "SR_B4", "SR_B5", "SR_B7"],
     "LANDSAT/LE07/C02/T1_L2": ["SR_B1", "SR_B2", "SR_B3", "SR_B4", "SR_B5", "SR_B7"],
@@ -56,7 +56,7 @@ for ano, imagen in composites.items():
     ndsi[ano] = imagen.normalizedDifference(["verde", "swir1"]).rename("ndsi")
 
 # Polígono dibujado manualmente tras revisión visual. Incluye zona clasificada como nieve que no es nieve. Problema de toma de datos de Landsat 7
-zona_excluida = geemap.geojson_to_ee("../data/zona_excluida.geojson")
+zona_excluida = geemap.geojson_to_ee("../data/input/zona_excluida.geojson")
 fuera_de_zona = ee.Image(1).paint(zona_excluida, 0)
 
 nieve = {}
@@ -75,12 +75,12 @@ vis_natural = {"bands": ["rojo", "verde", "azul"], "min": 0, "max":0.6}
 vis_ndsi = {"min": -1, "max": 1, "palette": ["olive", "lightgray", "blue"]} #no es necesario poner una sola banda porque no hay canales para ponerle los colores
 
 
-TEMPORADAS = [2026]
+ANO = [2009]
 
 Map = geemap.Map()
 Map.centerObject(area, zoom=12)
 Map.add_basemap("SATELLITE")
-for ano in TEMPORADAS:
+for ano in ANO:
     Map.addLayer(dem.gt(UMBRAL_ALTITUD).selfMask(), {"palette": ["red"], "opacity": 0.5}, "Por encima de 4.200 m", False)
     Map.addLayer(composites[ano], vis_natural, f"Natural {ano}", False)
     Map.addLayer(composites[ano], vis_falso_color, f"Falso {ano}", False)
@@ -88,33 +88,39 @@ for ano in TEMPORADAS:
     Map.addLayer(nieve[ano].selfMask(), {"palette": ["orange"]}, f"Nieve {ano}", False)
 Map
 
-TEMPORADAS = [2009, 2010, 2024, 2026]
 #%%Hacer un split de mapas
-''' 
-izquierda = geemap.ee_tile_layer(ndsi[2009], vis_ndsi, "NDSI 2009")
-derecha = geemap.ee_tile_layer(ndsi[2026], vis_ndsi, "NDSI 2026")
+'''
+vis_falso_color = {"bands": ["swir1", "nir", "rojo"], "min": 0, "max": 0.6}
+vis_natural = {"bands": ["rojo", "verde", "azul"], "min": 0, "max":0.6}
+vis_ndsi = {"min": -1, "max": 1, "palette": ["olive", "lightgray", "blue"]}
+
+FECHA1 = 2024
+FECHA2 = 2026
+izquierda = geemap.ee_tile_layer(nieve[FECHA1].selfMask(), {"palette": ["orange"]}, f"NDSI {FECHA1}")
+derecha = geemap.ee_tile_layer(nieve[FECHA2].selfMask(), {"palette": ["orange"]}, f"NDSI {FECHA2}")
 
 Map = geemap.Map()
 Map.centerObject(area, zoom=12)
 Map.split_map(left_layer=izquierda, right_layer=derecha)
 Map
-
 '''
-# %% Descargar la máscara de nieve de 2009 y su composite
-geemap.ee_export_image(
-    nieve[2009].toByte(),
-    filename="../data/nieve_2009.tif",
-    region=area,
-    scale=30,
-    crs="EPSG:4326",
-)
 
-geemap.ee_export_image(
-    composites[2009].select(["swir1", "nir", "rojo"]).toFloat(),
-    filename="../data/falso_color_2009.tif",
-    region=area,
-    scale=30,
-    crs="EPSG:4326",
-)
+# %% Exportar composite, NDSI y nieve de cada temporada 
+for ano in TEMPORADAS:
+    geemap.ee_export_image(
+        composites[ano].toFloat(),
+        filename=f"../data/output/{ano}_composite.tif",
+        region=area, scale=30, crs="EPSG:32618",
+    )
+    geemap.ee_export_image(
+        ndsi[ano].toFloat(),
+        filename=f"../data/output/{ano}_ndsi.tif",
+        region=area, scale=30, crs="EPSG:32618",
+    )
+    geemap.ee_export_image(
+        nieve[ano].toByte(),
+        filename=f"../data/output/{ano}_nieve.tif",
+        region=area, scale=30, crs="EPSG:32618",
+    )
 
 # %%

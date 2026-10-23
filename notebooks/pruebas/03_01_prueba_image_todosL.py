@@ -44,7 +44,7 @@ tabla_colecciones
 
 # %% Ver una imagen concreta
 SATELITE = "LANDSAT_8"   # L5, L7, L8, L9
-FECHA = "2026-01-11"
+FECHA = "2026-02-12"
 FILA = 56
 
 imagen = (

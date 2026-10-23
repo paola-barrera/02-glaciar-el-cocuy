@@ -28,3 +28,6 @@ FECHAS_DESPEJADAS = {
 # Umbrales para clasificar hielo (algoritmos clásicos de nieve; comprobados en 2009 y 2026)
 UMBRAL_NDSI = 0.4   # por encima: nieve, hielo o agua
 UMBRAL_NIR = 0.11   # por encima: descarta el agua, que es muy baja en el NIR
+
+# Área glaciar oficial del IDEAM (km²), para validar el método
+AREA_IDEAM = {2010: 16.54, 2024: 11.88}

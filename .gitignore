@@ -181,7 +181,7 @@ cython_debug/
 .cursorindexingignore
 
 # Datos pesados del proyecto: no se suben a GitHub
-data/
+data/output
 *.tif
 *.tiff
-!data/zona_excluida.geojson
+

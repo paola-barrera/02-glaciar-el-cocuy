@@ -11,6 +11,7 @@ dependencies:
   - python-duckdb      # SQL
   - scipy              # estadística
   - matplotlib         # gráficos
+  - rasterio           # leer y escribir rásters (GeoTIFF)
   - pip
   - pip:
       - pymannkendall  # test de tendencia Mann-Kendall y pendiente de Sen. OJO Revisar
