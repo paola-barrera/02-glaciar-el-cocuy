@@ -109,23 +109,23 @@ Map
 for ano in TEMPORADAS:
     geemap.ee_export_image(
         composites[ano].toFloat(),
-        filename=f"../data/output/{ano}_composite.tif",
+        filename=f"../outputs/{ano}_composite.tif",
         region=area, scale=30, crs="EPSG:32618",
     )
     geemap.ee_export_image(
         ndsi[ano].toFloat(),
-        filename=f"../data/output/{ano}_ndsi.tif",
+        filename=f"../outputs/{ano}_ndsi.tif",
         region=area, scale=30, crs="EPSG:32618",
     )
     geemap.ee_export_image(
         nieve[ano].toByte(),
-        filename=f"../data/output/{ano}_nieve.tif",
+        filename=f"../outputs/{ano}_nieve.tif",
         region=area, scale=30, crs="EPSG:32618",
     )
 
 geemap.ee_export_image(
     dem.toFloat(),
-    filename="../data/output/dem.tif",
+    filename="../outputs/dem.tif",
     region=area, scale=30, crs="EPSG:32618",
 )
 

@@ -6,7 +6,7 @@ import rasterio
 from a_config import TEMPORADAS, AREA_IDEAM
 import numpy as np
 
-CARPETA_OUTPUT = Path("../data/output")
+CARPETA_OUTPUT = Path("../outputs")
 
 # %% Área de nieve de cada temporada
 filas = []

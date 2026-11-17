@@ -185,7 +185,6 @@ data/output
 *.tif
 *.tiff
 
-
 # Pruebas: solo se publican los archivos 03_01
-notebooks/pruebas/*
-!notebooks/pruebas/03_01*
+notebooks/tests/*
+!notebooks/tests/03_01*

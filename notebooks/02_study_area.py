@@ -5,7 +5,7 @@ from a_config import PROYECTO_GEE, AREA_COORDS, UMBRAL_ALTITUD
 ee.Initialize(project=PROYECTO_GEE)
 
 # %% Área de estudio: rectángulo alrededor de la Sierra Nevada del Cocuy
-# Fuente: IDEAM, 6°21'-6°33' N y 72°15'-72°19' O, con un margen de 0,02° (~2 km)
+# Fuente: IDEAM, 6°21'-6°33' N y 72°15'-72°19' O, con un margen de 0,02° (~2 km). Para representar el mapa, se tomaron 2km más al oeste
 # [longitud oeste, latitud sur, longitud este, latitud norte] (paso de grados minutos y segundos a grados decimales en Excel)
 area = ee.Geometry.Rectangle(AREA_COORDS)
 
