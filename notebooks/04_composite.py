@@ -105,7 +105,7 @@ Map.split_map(left_layer=izquierda, right_layer=derecha)
 Map
 '''
 
-# %% Exportar composite, NDSI y nieve de cada temporada 
+# %% Exportar composite, NDSI y nieve de cada temporada. Además del modelo de elevación
 for ano in TEMPORADAS:
     geemap.ee_export_image(
         composites[ano].toFloat(),
@@ -122,5 +122,12 @@ for ano in TEMPORADAS:
         filename=f"../data/output/{ano}_nieve.tif",
         region=area, scale=30, crs="EPSG:32618",
     )
+
+geemap.ee_export_image(
+    dem.toFloat(),
+    filename="../data/output/dem.tif",
+    region=area, scale=30, crs="EPSG:32618",
+)
+
 
 # %%
